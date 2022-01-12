@@ -1,1 +1,1 @@
-Repositorio pra viabilização do projeto 2
+Repositório para organização dos artefatos criados e utilizados durante o desenvolvimento do Projeto de Licitação e Contratos para o Curso de Especialização em Engenharia e Ciência de Dados promovido pela Universidade Federal de Pernambuco e Samsung(Sidi)
