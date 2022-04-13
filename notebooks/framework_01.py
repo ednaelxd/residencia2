@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import pandas as pd
 import numpy as np 
 import glob
@@ -84,14 +78,14 @@ def list_part_itens(df_0):
 
 #COMEÇANDO O PROGRAMA 
 
+df_tag = importa_dados_taguiados()
+
 ###############################
 #print("Modelo da URL: C:\Users\gabri\Desktop\Data\dados_participantes_.csv")
 url = input("Digite a URL do Dados dos Participantes: ")
 ###############################
 print("....... Importando os dados .......")
 df = importa_dados_participantes(url)
-
-df_tag = importa_dados_taguiados()
 
 print("\n....... Mesclando os dataframes .......")
 m , df_0 = merge_dados_taguiados(df , df_tag)
