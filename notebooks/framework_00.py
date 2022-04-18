@@ -75,6 +75,10 @@ def classificador(aa):
     return(aa)
 
 
+'''
+    Funcionalidade 1: Display do Percentual de Licitações com irregularidade
+'''
+
 ##########################
 col_names = df.columns
 df=pd.DataFrame(classificador(np.array(df)),columns=col_names)
