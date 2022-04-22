@@ -4,7 +4,7 @@ import glob
 
 #DEFININDO FUNçÕES 
 
-def importa_dados_participantes(url): 
+'''def importa_dados_participantes(url): 
     
     # url = link para o local onde os dados estão armazenados
     df = pd.read_csv(url)
@@ -12,9 +12,9 @@ def importa_dados_participantes(url):
     # Deletando/criando coluna desnecessaria
     df.drop(columns=['Unnamed: 0','Nome UG', 'Modalidade Compra','Nome Órgão','Código Item Compra','Código UG', 'Código Modalidade Compra', 'Código Órgão'], axis=1, inplace=True)
     
-    return (df)
+    return (df)'''
 
-def importa_dados_taguiados():
+'''def importa_dados_taguiados():
     # importando os dados do framework_00
     from framework_00 import df
     df_tag = df
@@ -22,9 +22,9 @@ def importa_dados_taguiados():
     # Deletando/criando coluna desnecessaria
     df_tag.drop(columns=['Nome UG','Modalidade Compra','Objeto','Situação Licitação','Código Órgão Superior','Nome Órgão Superior','Código Órgão','Município','data','Data Abertura','Total','Obras','Código Modalidade Compra','Código UG'], axis=1, inplace=True)
     
-    return (df_tag)
+    return (df_tag)'''
 
-def merge_dados_taguiados(df_part , df_tag):
+'''def merge_dados_taguiados(df_part , df_tag):
     # Aplicando o merge nos dataframes
     m = pd.merge(df_tag, df, how = 'inner', on = ('Número Processo','Número Licitação'))
     
@@ -34,7 +34,7 @@ def merge_dados_taguiados(df_part , df_tag):
     # criando dataframe com os dados fraudulentos
     df_0 = m[m["Tag"]==0] 
     
-    return (m, df_0)
+    return (m, df_0)'''
 
 def analise_exploratória(df_0):
     # Número de participantes
