@@ -35,5 +35,6 @@ def classificador(aa):
         #TAG'AMENTO DAS LICITACOES DO TIPO: PREGÃO | INEXIGIBILIDADE DE LICITAÇÃO | CONCURSO | CONCORRENCIA INTERNACIONAL
         if(linhas[4]=='Pregão' or linhas[4]=='Inexigibilidade de Licitação' or linhas[4]=='Concurso' or linhas[4]=='Concorrência Internacional'):
             linhas[-1]=1 #EH LEGAL
+    tags = aa[:,-1]
     
-    return(aa)
+    return(tags)
