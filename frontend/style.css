@@ -1,0 +1,33 @@
+
+/*Estilo do subtítulo da página*/
+section {
+    font-family: 'roboto', sem serif;
+    text-align: center;
+    font-size: 100px;
+    letter-spacing: 0;
+    color: rgb(128,0,0);
+    
+       
+}
+
+footer, #MainMenu{
+    visibility: hidden;
+   
+}
+/*Estilo do título da página*/
+.e16nr0p30{
+    color:rgb(128,0,0);
+    font-weight: bold;
+    font-style: italic;
+    font-size: 80px;
+}
+
+.e1fqkh3o2{
+    background-color: rgb(128,0,0);
+    font-size: large;
+}
+/*Estilo do texto do menu*/
+.effi0qh3{
+    font-size:small;
+    color:rgb(244, 241, 246);
+}
