@@ -34,5 +34,5 @@ def calcula_pct_teto(data):
                 pct_teto.append(linhas[-3] / 176000)
             if (linhas[4]=='Convite')   and (linhas[-2]=='Compras/Servicos'):
                 pct_teto.append(linhas[-3] / 330000)
-
+        
     return(pct_teto)

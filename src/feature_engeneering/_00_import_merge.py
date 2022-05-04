@@ -3,14 +3,11 @@ import pandas as pd
 def importa_dados_zip(url):
     
     # url = link para o local onde os dados estão armazenados
-    df = pd.read_csv(url,compression='zip')
-    
-    # Deletando/criando coluna desnecessaria
-    del(df['Unnamed: 0'])
+    df = pd.read_csv(url,compression='zip', index_col=[0])
     
     # Ajustando nomes
     df.rename(columns={'Data Resultado Compra':'data'},inplace=True)
-    
+    df['data']=pd.to_datetime(df['data'])
     return (df)
 
 def importa_dados_participantes(url): 
