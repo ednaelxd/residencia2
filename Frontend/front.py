@@ -1,4 +1,5 @@
 from copyreg import dispatch_table
+from re import S
 import string
 from tkinter import Image
 from tkinter.tix import IMAGETEXT
@@ -50,12 +51,29 @@ if visualizacoes == "Pagina Principal":
     st.text('Equipe: \nEdnael Vieira\nGabriel Arnaud de Melo Fragoso\nLiviany Reis Rodrigues')
     st.text('')
     st.text('')
-elif visualizacoes == 'Licitações':
+
+elif visualizacoes == 'Licitações por Estado':
     st.title("Panorama geral de licitações por estado")
-    st.text(' Dataframe por Estado')
-    st.dataframe(df)
+    st.text('')
     pd.options.display.float_format = '{:,.4f}'.format
     from src.reports_functions.fraudes_estados import indice_fraude_estado
     fraudes = indice_fraude_estado(df,'2018','2020')
     #print(fraudes.head())
-    st.dataframe(fraudes)
+    from src.reports_functions.plots import plot_bar_valores
+
+    config = {
+    'toImageButtonOptions': {
+    'format': 'webp', # one of png, svg, jpeg, webp
+    'filename': 'custom_image',
+    'height': 800,
+    'width': 900,
+    'scale': 1 # Multiply title/legend/axis/canvas sizes by this factor
+    }
+    }
+    
+
+    fig1=plot_bar_valores(fraudes,1)
+    st.plotly_chart(fig1, use_container_width=False, config=config)
+    fig2=plot_bar_valores(fraudes,2)
+    st.plotly_chart(fig2, use_container_width=False, config=config, width=800)
+
