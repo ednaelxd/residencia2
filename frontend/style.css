@@ -24,10 +24,32 @@ footer, #MainMenu{
 
 .e1fqkh3o2{
     background-color: rgb(70, 80, 159);
-    font-size: large;
+    font-size:medium;
+    width: 290px;
 }
+
 /*Estilo do texto do menu*/
 .effi0qh3{
     font-size:small;
     color:rgb(244, 241, 246);
+}
+div.user-select-non.svg-containiner{
+    background-color:antiquewhite;
+    width: 800px;
+    height: 650px;
+}
+div.css-1a32fsj.e19lei0e0{
+    width: 300px;
+    height: 350px
+}
+div.st-av.st-aw.st-ax.st-ay.st-bw.st-by.st-b7.st-b4.st-b5.st-bz.st-c0.st-c1.st-c2.st-c3.st-bf.st-bg.st-bh.st-bi.st-c4.st-b2.st-c5.st-c6.st-bn.st-bl.st-c7.st-bm.st-c8{
+    width: 230px;
+    height: 40px
+}
+div.st-ci.st-bw.st-cj.st-ck.st-cl.st-by.st-cm.st-cn.st-co{
+    width: 195px;
+    height: 25px;
+}
+div.main.css-1v3fvcr.egzxvld3{
+    background-color: aliceblue;
 }

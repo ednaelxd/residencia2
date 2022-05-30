@@ -53,8 +53,9 @@ def plot_bar_valores(df,tipo):
         df['{%} Valor Ilegal']=df['{%} Valor Ilegal'].round(4)
         df['{%} de Ilegalidades']=df['{%} de Ilegalidades'].round(4)
         df_bal=df.drop(['AC','SE','RJ'],axis=0)
-        indexes=df_bal.index
-
+        #indexes=df_bal.index
+        indexes = df.index
+        #Geral##
         fig.add_trace(go.Scatter(name=df.columns[1], x=indexes, 
                 y=df['Total de Licitações'].values,mode='lines+markers'
                 ),2,1)
@@ -63,29 +64,28 @@ def plot_bar_valores(df,tipo):
                 text=df['{%} de Ilegalidades'],
                 textposition='outside'        
             ),row=2,col=1)
-
-        fig.add_trace(go.Scatter(name=df.columns[1], x=['SE','RJ'], 
-                y=df['Total de Licitações'][['SE','RJ']].values,mode='lines+markers'
-                ),1,1)
-        fig.add_trace(go.Bar(name=df.columns[2], 
-                x=['SE','RJ'], y=df['Total de Ilegais'][['SE','RJ']].values,
-                text=df['{%} de Ilegalidades'][['SE','RJ']],
-                textposition='outside'        
-            ),row=1,col=1)
-
-        fig.add_trace(go.Scatter(name=df.columns[1], x=['AC'], 
-                y=df['Total de Licitações'][['AC']].values,mode='lines+markers'
-                ),1,2)
-        fig.add_trace(go.Bar(name=df.columns[2], 
-                x=['AC'], y=df['Total de Ilegais'][['AC']].values,
-                text=df['{%} de Ilegalidades'][['AC']],
-                textposition='outside'        
-            ),row=1,col=2)
+        # SERGIPE E RIO DE JANEIRO
+        #fig.add_trace(go.Scatter(name=df.columns[1], x=['SE','RJ'], 
+        #        y=df['Total de Licitações'][['SE','RJ']].values,mode='lines+markers'
+        #        ),1,1)
+        #fig.add_trace(go.Bar(name=df.columns[2], 
+        #        x=['SE','RJ'], y=df['Total de Ilegais'][['SE','RJ']].values,
+        #        text=df['{%} de Ilegalidades'][['SE','RJ']],
+        #        textposition='outside'        
+        #    ),row=1,col=1)
+        # ACRE
+        #fig.add_trace(go.Scatter(name=df.columns[1], x=['AC'], 
+        #        y=df['Total de Licitações'][['AC']].values,mode='lines+markers'
+        #        ),1,2)
+        #fig.add_trace(go.Bar(name=df.columns[2], 
+        #        x=['AC'], y=df['Total de Ilegais'][['AC']].values,
+        #        text=df['{%} de Ilegalidades'][['AC']],
+        #        textposition='outside'        
+        #    ),row=1,col=2)
         # Change the bar mode
         #fig.update_layout(barmode='group')
         #fig.update_xaxes(rangeslider_visible=True)
         #fig.show()
-
         return(fig)
     
 
