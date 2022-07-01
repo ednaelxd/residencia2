@@ -5,7 +5,7 @@ section {
     text-align: center;
     font-size: 100px;
     letter-spacing: 0;
-    color: rgb(42, 28, 172);
+    color: rgb(255, 255, 255);
     
        
 }
@@ -14,16 +14,20 @@ footer, #MainMenu{
     visibility: hidden;
    
 }
+
 /*Estilo do título da página*/
 .e16nr0p30{
-    color:rgb(42, 28, 172);
+    color:rgb(250, 250, 250);
     font-weight: bold;
     font-style: italic;
-    font-size: 50px;
+    font-size: 45px;
+}
+.css-qrbaxs.effi0qh3{
+    color:rgb(255, 255, 255);
 }
 
 .e1fqkh3o2{
-    background-color: rgb(70, 80, 159);
+    background-color: rgb(0, 0, 0);
     font-size:medium;
     width: 290px;
 }
@@ -34,14 +38,14 @@ footer, #MainMenu{
     color:rgb(244, 241, 246);
 }
 div.user-select-non.svg-containiner{
-    background-color:antiquewhite;
-    width: 800px;
-    height: 650px;
-}
+    background-color:rgb(90, 70, 238);
+   /* width: 800px;
+    height: 730px;*/
+}/*
 div.css-1a32fsj.e19lei0e0{
-    width: 300px;
+    width: 450px;
     height: 350px
-}
+}*/
 div.st-av.st-aw.st-ax.st-ay.st-bw.st-by.st-b7.st-b4.st-b5.st-bz.st-c0.st-c1.st-c2.st-c3.st-bf.st-bg.st-bh.st-bi.st-c4.st-b2.st-c5.st-c6.st-bn.st-bl.st-c7.st-bm.st-c8{
     width: 230px;
     height: 40px
@@ -50,6 +54,25 @@ div.st-ci.st-bw.st-cj.st-ck.st-cl.st-by.st-cm.st-cn.st-co{
     width: 195px;
     height: 25px;
 }
-div.main.css-1v3fvcr.egzxvld3{
-    background-color: aliceblue;
+section.main.css-1v3fvcr.egzxvld3{
+    background-color: rgb(43, 43, 44);
 }
+div.block-container.css-18e3th9.egzxvld2{
+    background-color: rgb(53, 53, 54);
+    border-color: black;
+    /*width: 950px;*/
+}
+div.css-ps6290.e1wqxbhn1{
+    color:rgb(244, 241, 246);
+}
+/*Cabeçalho da Página - Redução da largura*/
+header.css-vl8c1e.e8zbici2{
+    width: 1086px;
+    height: 5px;
+}
+
+/* Estilo das caixas dos 
+div.element-container.css-og2c7n.e1tzin5v3{
+    width: 750;
+    height: 800;
+}*/

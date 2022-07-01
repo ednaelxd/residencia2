@@ -12,9 +12,9 @@ def indice_fraude_estado(dados,data_inicio,data_final):
     results = pd.merge(percentagem,total,how = 'inner', left_index=True, right_index=True)
     results = pd.merge(results,total_ileg,how = 'inner',left_index=True, right_index=True)
 
-    valor_licitado = dados.groupby(['UF']).agg({'Total':'sum'})
+    valor_licitado = dados[(dados['data']>=data_inicio) & (dados['data']<=data_final)].groupby(['UF']).agg({'Total':'sum'})
     valor_licitado = valor_licitado['Total']
-    valor_ilegal = dados[dados['Tag']==0].groupby(['UF']).agg({'Total':'sum'})
+    valor_ilegal = dados[(dados['Tag']==0) & (dados['data']>=data_inicio) & (dados['data']<=data_final)].groupby(['UF']).agg({'Total':'sum'})
     valor_ilegal= valor_ilegal['Total']
     pct_valor_ileg = valor_ilegal/valor_licitado
 

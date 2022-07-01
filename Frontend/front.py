@@ -3,7 +3,9 @@ from re import S
 import string
 from tkinter import Image
 from tkinter.tix import IMAGETEXT
-from pyparsing import col
+from turtle import color
+from matplotlib.colors import rgb2hex
+from pyparsing import White, col
 import spacy
 import streamlit as st;
 import pandas as pd;
@@ -15,7 +17,11 @@ from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from wordcloud import WordCloud;
 import plotly.express as px
 
-
+st.set_page_config(
+    page_title="Exposer",
+    page_icon="✅",
+    layout="wide",
+)
 # Adicionando estilo CSS
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html = True)
@@ -24,14 +30,14 @@ with open("style.css") as f:
 # Carregando os dataset
 @st.cache
 def load_itens_ilegais():
-    df_itens_ilegais = pd.read_csv("../data/df_itens_ilegais.csv")
+    df_itens_ilegais = pd.read_csv("../data/df_itens_ilegais.csv", index_col=[0])
 
     return df_itens_ilegais
 #fim do carregamento dos dados
 @st.cache
 def importa_lic():
     dtypes = {'Modalidade Compra':'category','Nome UG':'category','Situação Licitação':'category'}
-    df = pd.read_csv("../data/lic_taguiado.csv",dtype=dtypes)
+    df = pd.read_csv("../data/lic_taguiado.csv",dtype=dtypes, index_col=[0])
     return df
 # Lendo os Dataset
 st.cache(persist=True)
@@ -46,18 +52,70 @@ with st.sidebar:
 if visualizacoes == "Pagina Principal":
     st.title("Licitações Públicas")
     st.text('Essa plataforma foi desenvolvida para que seja utilizada como ferramenta auxiliadora\n na detecção de possíveis indicíos de irregularidades em licitações públicas\ne no combate a corrupção.Você pode visualizar quais os participantes\n e itens mais recorrentes nas licitações com indícios de irregularidades,\n como também, visualizar os estados com maior recorrência de fraude, etc.')
-    st.image('..\data\itens_ilegais.png', width=800)
-    st.text('')
+    st.image('..\data\itens_ilegais.png', width=750)
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
+    st.text('\n')
     st.text('Equipe: \nEdnael Vieira\nGabriel Arnaud de Melo Fragoso\nLiviany Reis Rodrigues')
     st.text('')
     st.text('')
 
+elif visualizacoes == 'Itens':
+    st.title("Distribuição dos itens por estado")
+    st.text('')
+    data_inic = st.text_input("Digite a data inicial para análise (no formato aaaa--mm--dd)")
+    data_fim = st.text_input("Digite a data final para análise (no formato aaaa--mm--dd)")
+
+    from src.reports_functions.plots import plota_treemap_itens
+    treemap = plota_treemap_itens(df,data_inic,data_fim)
+    st.plotly_chart(treemap, use_container_width=False)
+
+elif visualizacoes == 'Participantes':
+    st.title("TOPPSS")
+    st.text('')
+    #data_inic = st.text_input("Digite a data inicial para análise (no formato aaaa--mm--dd)")
+    #data_fim = st.text_input("Digite a data final para análise (no formato aaaa--mm--dd)")
+    from src.feature_engeneering._03_plus_times_total import calcula_pct_teto
+    dd2=df[df['Tag']==0]
+    abc = pd.DataFrame(calcula_pct_teto(dd2))
+    dd2['pct_do_teto']=abc[0].values
+
+    from src.reports_functions.plots import plot_plus_total
+    plus_total=plot_plus_total(dd2)
+    st.plotly_chart(plus_total)
+
+    #st.dataframe((dd2.drop(['Código Modalidade Compra','Situação Licitação','Código Órgão','Data Abertura'],axis=1)).iloc[:, 2:].sort_values(by='pct_do_teto',ascending=False)[0:10])
+
 elif visualizacoes == 'Licitações por Estado':
+
+    #dado filtrado
+    # dataframe filter
+    #df = df[df["UF"] == estado_filtro]
+
     st.title("Panorama geral de licitações por estado")
     st.text('')
     pd.options.display.float_format = '{:,.4f}'.format
+
+    data_inic = st.text_input("Digite a data inicial para análise (no formato aaaa--mm--dd)")
+    data_fim = st.text_input("Digite a data final para análise (no formato aaaa--mm--dd)")
+
     from src.reports_functions.fraudes_estados import indice_fraude_estado
-    fraudes = indice_fraude_estado(df,'2018','2020')
+    fraudes = indice_fraude_estado(df,data_inic,data_fim)
+    #st.dataframe(fraudes)
     #print(fraudes.head())
     from src.reports_functions.plots import plot_bar_valores
 
@@ -70,10 +128,23 @@ elif visualizacoes == 'Licitações por Estado':
     'scale': 1 # Multiply title/legend/axis/canvas sizes by this factor
     }
     }
-    
 
     fig1=plot_bar_valores(fraudes,1)
     st.plotly_chart(fig1, use_container_width=False, config=config)
     fig2=plot_bar_valores(fraudes,2)
     st.plotly_chart(fig2, use_container_width=False, config=config, width=800)
 
+    from src.reports_functions.plots import plota_treemap_itens
+    treemap = plota_treemap_itens(df,data_inic,data_fim)
+    st.plotly_chart(treemap, use_container_width=False)
+
+    st.markdown("\n")
+    st.markdown("\n")
+    st.markdown("\n")
+    st.markdown("\n")
+    st.markdown("\n")
+    st.markdown("\n")
+
+    df2=df.drop(['Código Modalidade Compra','Código UG','Código Órgão Superior','Código Órgão'],axis=1)
+    st.markdown("**Visão de detalhada dos dados**", unsafe_allow_html=True)
+    st.dataframe(df2)
