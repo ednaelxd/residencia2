@@ -1,4 +1,5 @@
 from copyreg import dispatch_table
+from optparse import Values
 from re import S
 import string
 from tkinter import Image
@@ -52,40 +53,42 @@ with st.sidebar:
 if visualizacoes == "Pagina Principal":
     st.title("Licitações Públicas")
     st.text('Essa plataforma foi desenvolvida para que seja utilizada como ferramenta auxiliadora\n na detecção de possíveis indicíos de irregularidades em licitações públicas\ne no combate a corrupção.Você pode visualizar quais os participantes\n e itens mais recorrentes nas licitações com indícios de irregularidades,\n como também, visualizar os estados com maior recorrência de fraude, etc.')
-    st.image('..\data\itens_ilegais.png', width=750)
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
-    st.text('\n')
+    
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.write('')
+    with col2:
+       st.image('..\data\itens_ilegais.png', width=500)
+    with col3:
+        st.write('')
+    with col4:
+        st.write('')
+
     st.text('Equipe: \nEdnael Vieira\nGabriel Arnaud de Melo Fragoso\nLiviany Reis Rodrigues')
-    st.text('')
-    st.text('')
 
 elif visualizacoes == 'Itens':
     st.title("Distribuição dos itens por estado")
     st.text('')
     data_inic = st.text_input("Digite a data inicial para análise (no formato aaaa--mm--dd)")
     data_fim = st.text_input("Digite a data final para análise (no formato aaaa--mm--dd)")
+    estado = st.text_input("Digite de qual estado deseja obter informações")
 
-    from src.reports_functions.plots import plota_treemap_itens
-    treemap = plota_treemap_itens(df,data_inic,data_fim)
-    st.plotly_chart(treemap, use_container_width=False)
+    dd2=df[(df['data']>=data_inic) & (df['data']<=data_fim)]
+    gp1=dd2[['UF','Objeto']].groupby(['UF','Objeto'],as_index=False).value_counts()
+    st.text('Itens mais licitados por Estado')
+    gp2=gp1[gp1['UF']==estado]
+    #cont=0
+    
+    gp2=gp2[0:20]
+    from src.reports_functions.plots import plot_lista_objetos
+    fig=plot_lista_objetos(gp2)
+    st.plotly_chart(fig,width=800)
+    st.dataframe(gp2,1500,500)
+    
 
 elif visualizacoes == 'Participantes':
-    st.title("TOPPSS")
+    st.title("Seção de Rankings")
     st.text('')
     #data_inic = st.text_input("Digite a data inicial para análise (no formato aaaa--mm--dd)")
     #data_fim = st.text_input("Digite a data final para análise (no formato aaaa--mm--dd)")
@@ -138,11 +141,6 @@ elif visualizacoes == 'Licitações por Estado':
     treemap = plota_treemap_itens(df,data_inic,data_fim)
     st.plotly_chart(treemap, use_container_width=False)
 
-    st.markdown("\n")
-    st.markdown("\n")
-    st.markdown("\n")
-    st.markdown("\n")
-    st.markdown("\n")
     st.markdown("\n")
 
     df2=df.drop(['Código Modalidade Compra','Código UG','Código Órgão Superior','Código Órgão'],axis=1)

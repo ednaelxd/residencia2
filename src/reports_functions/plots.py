@@ -5,6 +5,7 @@ import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.express as px
 
+
 def plot_bar_valores(df,tipo):
     
     if tipo == 1:
@@ -110,8 +111,21 @@ def plot_plus_total(df):
     #fig.update_layout(uniformtext_minsize=14)
     #fig.update_traces(root_color="lightgrey")
     fig.update_layout(
-        title_text='Top 10: Licitações que mais ultrapassam o teto estabelecido pro Lei'
+        title_text='Top 20: Licitações que mais ultrapassam o teto estabelecido pro Lei'
     )
+    return(fig)
+
+# EXIBIÇÃO DOS TOP OBJETCOTS
+def plot_lista_objetos(gp2):
+    gp3=gp2.copy()
+    cont=0
+    for line in gp3['Objeto']:
+        gp3['Objeto'][cont] = line[0:30] +'<br>'+line[30:]
+        cont+=1
+        #print('entrou aq')
+    fig = px.treemap(gp3,path=['UF','Objeto'],values='count',
+                maxdepth=3)
+    fig.data[0]['textfont']['size']=13
     return(fig)
 
 
