@@ -128,5 +128,8 @@ def plot_lista_objetos(gp2):
     fig.data[0]['textfont']['size']=13
     return(fig)
 
+def plot_tops(df):
+    fig = px.bar(df,x=df.iloc[:,1],y=df.iloc[:,0])
+    return(fig)
 
 # EXIBIÇÃO DOS TOP-PARTICIPANTES
