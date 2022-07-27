@@ -111,7 +111,7 @@ def plot_plus_total(df):
     #fig.update_layout(uniformtext_minsize=14)
     #fig.update_traces(root_color="lightgrey")
     fig.update_layout(
-        title_text='Top 20: Licitações que mais ultrapassam o teto estabelecido pro Lei'
+        title_text='Top 20: Licitações que mais ultrapassam o teto estabelecido por Lei'
     )
     return(fig)
 

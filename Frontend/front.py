@@ -10,16 +10,11 @@ from cv2 import normalize
 from matplotlib import colors
 from matplotlib.colors import rgb2hex
 from pyparsing import White, col
-import spacy
 import streamlit as st;
 import pandas as pd;
 import numpy as np;
 import matplotlib.pyplot as plt;
 import plotly.express as px;
-from nltk.corpus import stopwords;
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-from wordcloud import WordCloud;
-import plotly.express as px
 
 st.set_page_config(
     page_title="Exposer",
@@ -50,9 +45,9 @@ def load_df_g():
 
 @st.cache
 def load_itens_ilegais():
-    df_itens_ilegais = pd.read_csv("../data/df_itens_ilegais.csv", index_col=[0])
+    df_itens = pd.read_csv("../data/df_licitacao_itens_ilegais.zip", index_col=[0],compression='zip')
 
-    return df_itens_ilegais
+    return df_itens
 #fim do carregamento dos dados
 @st.cache
 def importa_lic():
@@ -62,16 +57,16 @@ def importa_lic():
 # Lendo os Dataset
 st.cache(persist=True)
 
-df_itens_ilegais = load_itens_ilegais()
+df_itens = load_itens_ilegais()
 df = importa_lic()
 df_g=load_df_g()
-menu = ["Pagina Principal", "Lista dos TOPS", "Itens", "Licitações por Estado"]
+menu = ["Pagina Principal", "Lista dos TOPS", "Itens", "Licitações por Estado", "Relações entre os itens"]
 config = {'displayModeBar': False}
 with st.sidebar:
 
     visualizacoes = st.selectbox("Selecione", menu, 0)
-    data_inic = st.date_input('Insira a data inicial da análise')
-    data_fim = st.date_input('Insira a data final da análise')
+    data_inic = st.date_input('Insira a data inicial da análise',value=pd.to_datetime('2018-07-01', format='%Y-%m-%d'))
+    data_fim = st.date_input('Insira a data final da análise',value=pd.to_datetime('2021-08-31', format='%Y-%m-%d'))
 
 if visualizacoes == "Pagina Principal":
 
@@ -85,19 +80,22 @@ if visualizacoes == "Pagina Principal":
         #st.write(valores)
         val0= str(valores[0])
         val1= str(valores[1])
-        st.metric(label='Qtd de Licitações\nIrregulares',value = dd2['Tag'].value_counts()[0],delta=val0,delta_color="inverse")
+        #st.markdown("<h1 style='text-align: center; color: grey;'>Big headline</h1>", unsafe_allow_html=True)
+        st.metric(label="Quantidade de Licitações\nIrregulares",value = dd2['Tag'].value_counts()[0],delta=val0,delta_color="inverse")
         
     with col2:
-       st.metric(label='Qtd de Licitações\nNormais',value = dd2['Tag'].value_counts()[1],delta=val1,delta_color="normal")
+       st.metric(label='Quantidade de Licitações\nNormais',value = dd2['Tag'].value_counts()[1],delta=val1,delta_color="normal")
     with col3:
         vmax ="R$"+str((dd2['Total'].sum()/1000000000).round(1))+' Bi'
-        st.metric(label='Valor Licitado no Período',value =vmax)
+        st.metric(label='   Valor Licitado no Período',value =vmax)
         #st.image('..\data\itens_ilegais.png', width=500)
     with col4:
-        st.write('')
+        vmax2 ="R$"+str((dd2[dd2['Tag']==0]['Total'].sum()/1000000000).round(1))+' Bi'
+        st.metric(label='Valor Irregular no Período',value =vmax2)
+        #st.write('')
     st.text('Tipos de Licitações presentes')
     st.plotly_chart(px.bar(dd2['Modalidade Compra'].value_counts(),labels={'value':'Quantidade de Licitações','index':'Tipo'},
-                    text_auto=True,color='value',color_continuous_scale=px.colors.sequential.Viridis))
+                    text_auto=True,color='value',color_continuous_scale=px.colors.sequential.Viridis),config=config)
 
     st.text('Equipe: \nEdnael Vieira\nGabriel Arnaud de Melo Fragoso\nLiviany Reis Rodrigues')
 
@@ -106,7 +104,7 @@ elif visualizacoes == 'Itens':
     st.text('')
     #data_inic = st.text_input("Digite a data inicial para análise (no formato aaaa--mm--dd)")
     #data_fim = st.text_input("Digite a data final para análise (no formato aaaa--mm--dd)")
-    estado = st.text_input("Digite a sigla do estado que deseja obter informações")
+    estado = st.text_input("Digite a sigla do estado que deseja obter informações",value='PE')
 
     dd2=df[(df['data']>=str(data_inic)) & (df['data']<=str(data_fim))]
     gp1=dd2[['UF','Objeto']].groupby(['UF','Objeto'],as_index=False).value_counts()
@@ -188,7 +186,27 @@ elif visualizacoes == 'Licitações por Estado':
     st.plotly_chart(treemap, use_container_width=False)
 
     st.markdown("\n")
-
     df2=df.drop(['Código Modalidade Compra','Código UG','Código Órgão Superior','Código Órgão'],axis=1)
     st.markdown("**Visão de detalhada dos dados**", unsafe_allow_html=True)
     st.dataframe(df2)
+
+elif visualizacoes == 'Relações entre os itens':
+    st.text('Neste gráfico é mostrado o nível da relação entre o item antecedente e consequente, no tamanho dos boxes')
+    st.markdown('_O cálculo se dá pela aplicação do Algorítmo Apriori_')
+    from src.reports_functions.apriori import apriori_generator
+    obras_fim, serv_fim = apriori_generator(df_itens)
+
+    #st.dataframe(obras_fim)
+    #st.dataframe(serv_fim)
+
+    fig = px.treemap(obras_fim,path=[px.Constant('Relação entre itens de obras'),'antecedents','consequents'],
+                        values='confidence',maxdepth=3)
+    fig2 = px.treemap(serv_fim,path=[px.Constant('Relação entre itens de compras/serviços'),'antecedents','consequents'],
+                        values='confidence',maxdepth=3)
+
+    st.plotly_chart(fig, config=config)
+    st.plotly_chart(fig2, config=config)
+
+
+
+    
