@@ -5,8 +5,10 @@ Repositório para organização dos artefatos criados e utilizados durante o des
 ## Introdução
 
 Licitações Públicas: São processos pelos quais as instituições públicas realziam compras e contratam serviços. Nelas, são propostas pelas entidades governamentais o que se deseja comprar, e empresas privadas podem participar dos pleitos, apresentando suas propostas e valores correspondentes. Para saber mais sobre os tipos de licitações, deixamos o link: https://www.portaltransparencia.gov.br/entenda-a-gestao-publica/licitacoes-e-contratacoes.
-A tabela a seguir, mostra os tetos e pisos estabelecidos por lei para cada tipo de compra:
-![alt_text](imgs/tabela lics.png "Atualizada em 16.08.2022 - Fonte: https://www.controladoria.go.gov.br/")
+A tabela a seguir, mostra os tetos e pisos estabelecidos por lei para cada tipo de compra (Atualizada em 16.08.2022 - Fonte: https://www.controladoria.go.gov.br):
+
+<img src="https://github.com/ednaelxd/residencia2/blob/bd3138e29bbfc39e98b862e6aac62e0bdd20e3b1/imgs/tabela_lics.png" width="750" height="600">
+
 ## Tela inicial
 
 ![alt_text](imgs/exp1.png "Tela inicial do Exposer")
