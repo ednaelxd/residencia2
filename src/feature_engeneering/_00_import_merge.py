@@ -3,7 +3,7 @@ import pandas as pd
 def importa_dados_zip(url):
     
     # url = link para o local onde os dados estão armazenados
-    df = pd.read_csv(url,compression='zip', index_col=[0])
+    df = pd.read_csv(url, index_col=[0])
     
     # Ajustando nomes
     df.rename(columns={'Data Resultado Compra':'data'},inplace=True)

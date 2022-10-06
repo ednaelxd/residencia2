@@ -21,7 +21,7 @@ def generate_1(url_data,url_citys):
 
     #__START_____________________
     print('. . . . . . .TAGUIANDO . . . . . .\n')
-    from src.feature_engeneering._02_classification import classificador
+    from src.feature_engeneering._02_classification_ATT import classificador
     df['Tag'] = classificador(np.array(df))
     #__END_______________________
 
